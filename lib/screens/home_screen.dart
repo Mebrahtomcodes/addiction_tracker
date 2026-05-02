@@ -3,6 +3,7 @@ import 'dart:math';
 import 'dart:async';
 import 'package:animate_do/animate_do.dart';
 import '../services/storage_service.dart';
+import '../widgets/developer_dialog.dart';
 import 'urge_screen.dart';
 import '../theme.dart';
 
@@ -224,8 +225,13 @@ class _HomeScreenState extends State<HomeScreen> {
         title: const Text("DISCIPLINE"),
         actions: [
           IconButton(
-            onPressed: () {}, // Settings or Profile could go here
-            icon: const Icon(Icons.account_circle_outlined),
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (context) => const DeveloperDialog(),
+              );
+            },
+            icon: const Icon(Icons.info_outline_rounded),
           ),
         ],
       ),
@@ -274,7 +280,27 @@ class _HomeScreenState extends State<HomeScreen> {
                   delay: const Duration(milliseconds: 600),
                   child: _buildActionButtons(),
                 ),
-                const SizedBox(height: 40),
+                const SizedBox(height: 30),
+                FadeIn(
+                  delay: const Duration(milliseconds: 1000),
+                  child: GestureDetector(
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) => const DeveloperDialog(),
+                      );
+                    },
+                    child: Text(
+                      "Developed by Mebre lala",
+                      style: TextStyle(
+                        color: AppTheme.textWhite.withOpacity(0.3),
+                        fontSize: 12,
+                        letterSpacing: 1.2,
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 10),
               ],
             ),
           ),
