@@ -3,9 +3,12 @@ import 'dart:async';
 import 'dart:math';
 import 'package:animate_do/animate_do.dart';
 import '../theme.dart';
+import '../services/quote_service.dart';
 
 class UrgeScreen extends StatefulWidget {
-  const UrgeScreen({super.key});
+  final String trackerTitle;
+  
+  const UrgeScreen({super.key, required this.trackerTitle});
 
   @override
   State<UrgeScreen> createState() => _UrgeScreenState();
@@ -18,58 +21,7 @@ class _UrgeScreenState extends State<UrgeScreen> {
   int sentenceIndex = 0;
   List<String> activeSentences = [];
 
-  final List<String> allUrgeSentences = [
-    "The urge is just a wave. Ride it.",
-    "This feeling is temporary. Your integrity is permanent.",
-    "Don't trade your future self for a few seconds of pleasure.",
-    "You are stronger than a chemical signal in your brain.",
-    "Close your eyes. Breathe. This too shall pass.",
-    "Think about why you started. Don't let that person down.",
-    "Your brain is lying to you right now. Don't believe it.",
-    "You've survived every urge so far. You'll survive this one too.",
-    "A moment of weakness is not worth a lifetime of regret.",
-    "Urges are like clouds; they pass if you just wait.",
-    "Focus on your breath. Inhale strength, exhale the urge.",
-    "You are the master of your actions, not your impulses.",
-    "The power to say no is your greatest strength.",
-    "Imagine the pride you'll feel tomorrow if you stay strong now.",
-    "One minute of discipline saves hours of guilt.",
-    "Your future is being built by the choices you make today.",
-    "Don't give up what you want most for what you want now.",
-    "The urge will fade. Your progress is what remains.",
-    "Stay present. This moment is all you have to conquer.",
-    "You are not your thoughts. You are the observer of them.",
-    "Every 'no' to an urge is a 'yes' to your freedom.",
-    "Feel the urge, then choose to let it go.",
-    "You are rewiring your brain every second you resist.",
-    "The discomfort of resisting is growth in disguise.",
-    "Be patient with yourself. Healing takes time.",
-    "You are a warrior. Warriors don't surrender to impulses.",
-    "Discipline is choosing between what you want now and what you want most.",
-    "Your willpower is a muscle. This is your workout.",
-    "The craving is just a thought. It has no power unless you act.",
-    "Stay focused on the man you are becoming.",
-    "Don't let a temporary feeling destroy a permanent goal.",
-    "You have the authority to change your story.",
-    "The best way to predict your future is to create it, one choice at a time.",
-    "Self-control is the highest form of self-love.",
-    "You are not alone in this fight. Stay strong.",
-    "Every urge you defeat makes you significantly stronger.",
-    "Your potential is far greater than this temporary distraction.",
-    "Don't look back. You're not going that way.",
-    "The secret of change is to focus all your energy on building the new.",
-    "You are worthy of a life free from addiction.",
-    "This is a test of your character. Pass it with honor.",
-    "The urge is a ghost. It cannot touch you unless you let it.",
-    "Breathe deep. You are alive, you are here, and you are in control.",
-    "Small steps in the right direction lead to big changes.",
-    "Your legacy is defined by your discipline.",
-    "Don't throw away days of progress for seconds of impulse.",
-    "You are building a version of yourself that cannot be broken.",
-    "The only way out is through. Stay the course.",
-    "You are the captain of your soul. Steer carefully.",
-    "Today is a victory. Claim it by staying strong.",
-  ];
+  // The sentences will be loaded dynamically in initState
 
   void startTimer() {
     timer = Timer.periodic(const Duration(seconds: 1), (t) {
@@ -92,9 +44,10 @@ class _UrgeScreenState extends State<UrgeScreen> {
   @override
   void initState() {
     super.initState();
-    // Pick 6 random unique sentences from the pool of 50
+    // Pick 6 random unique sentences from the pool of dynamic sentences
     final random = Random();
-    List<String> tempPool = List.from(allUrgeSentences);
+    List<String> dynamicUrgeSentences = QuoteService.getUrgeSentences(widget.trackerTitle);
+    List<String> tempPool = List.from(dynamicUrgeSentences);
     tempPool.shuffle(random);
     activeSentences = tempPool.take(6).toList();
     
