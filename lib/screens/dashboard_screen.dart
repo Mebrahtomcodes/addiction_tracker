@@ -8,6 +8,7 @@ import '../widgets/developer_dialog.dart';
 import '../widgets/add_tracker_dialog.dart';
 import 'tracker_detail_screen.dart';
 import '../theme.dart';
+import '../main.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
@@ -116,6 +117,16 @@ class _DashboardScreenState extends State<DashboardScreen> {
         actions: [
           IconButton(
             onPressed: () {
+              MyApp.of(context).toggleTheme();
+            },
+            icon: Icon(
+              MyApp.of(context).isDarkMode 
+                ? Icons.light_mode_outlined 
+                : Icons.dark_mode_outlined
+            ),
+          ),
+          IconButton(
+            onPressed: () {
               showDialog(
                 context: context,
                 builder: (context) => const DeveloperDialog(),
@@ -132,7 +143,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             radius: 1.5,
             colors: [
               AppTheme.primaryGreen.withOpacity(0.1),
-              AppTheme.backgroundBlack,
+              Theme.of(context).scaffoldBackgroundColor,
             ],
           ),
         ),
@@ -168,13 +179,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
             Icon(
               Icons.track_changes,
               size: 80,
-              color: AppTheme.textWhite.withOpacity(0.2),
+              color: Theme.of(context).textTheme.bodyLarge?.color?.withOpacity(0.2),
             ),
             const SizedBox(height: 20),
             Text(
               "No trackers yet.",
               style: TextStyle(
-                color: AppTheme.textWhite.withOpacity(0.5),
+                color: Theme.of(context).textTheme.bodyLarge?.color?.withOpacity(0.5),
                 fontSize: 18,
               ),
             ),
@@ -182,7 +193,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             Text(
               "Tap + to start building discipline.",
               style: TextStyle(
-                color: AppTheme.textWhite.withOpacity(0.4),
+                color: Theme.of(context).textTheme.bodyLarge?.color?.withOpacity(0.4),
                 fontSize: 14,
               ),
             ),
@@ -213,7 +224,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         margin: const EdgeInsets.only(bottom: 16),
         padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
-          color: AppTheme.surfaceGrey,
+          color: Theme.of(context).cardTheme.color,
           borderRadius: BorderRadius.circular(20),
           border: Border.all(
             color: AppTheme.primaryGreen.withOpacity(0.3),
@@ -236,10 +247,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 children: [
                   Text(
                     tracker.title,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
-                      color: AppTheme.textWhite,
+                      color: Theme.of(context).textTheme.bodyLarge?.color,
                       letterSpacing: 1.1,
                     ),
                     maxLines: 1,
@@ -257,7 +268,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       Text(
                         "Best: ${tracker.longestStreak}",
                         style: TextStyle(
-                          color: AppTheme.textWhite.withOpacity(0.5),
+                          color: Theme.of(context).textTheme.bodyLarge?.color?.withOpacity(0.5),
                           fontSize: 12,
                         ),
                       ),

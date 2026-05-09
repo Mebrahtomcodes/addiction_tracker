@@ -22,21 +22,19 @@ class _AddTrackerDialogState extends State<AddTrackerDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      backgroundColor: AppTheme.surfaceGrey,
       title: const Text(
         "New Tracker",
         style: TextStyle(
-          color: AppTheme.textWhite,
           fontWeight: FontWeight.bold,
         ),
       ),
       content: TextField(
         controller: _controller,
         autofocus: true,
-        style: const TextStyle(color: AppTheme.textWhite),
+        style: TextStyle(color: Theme.of(context).textTheme.bodyLarge?.color),
         decoration: InputDecoration(
           hintText: "e.g No Tiktok,No Smoking,No Betting etc.",
-          hintStyle: TextStyle(color: AppTheme.textWhite.withOpacity(0.5)),
+          hintStyle: TextStyle(color: Theme.of(context).textTheme.bodyLarge?.color?.withOpacity(0.5)),
           enabledBorder: const UnderlineInputBorder(
             borderSide: BorderSide(color: AppTheme.accentBlue),
           ),
@@ -50,13 +48,10 @@ class _AddTrackerDialogState extends State<AddTrackerDialog> {
           onPressed: () => Navigator.pop(context),
           child: Text(
             "Cancel",
-            style: TextStyle(color: AppTheme.textWhite.withOpacity(0.7)),
+            style: TextStyle(color: Theme.of(context).textTheme.bodyLarge?.color?.withOpacity(0.7)),
           ),
         ),
         ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: AppTheme.primaryGreen,
-          ),
           onPressed: () {
             final title = _controller.text.trim();
             if (title.isNotEmpty) {
@@ -67,7 +62,6 @@ class _AddTrackerDialogState extends State<AddTrackerDialog> {
           child: const Text(
             "Add",
             style: TextStyle(
-              color: AppTheme.backgroundBlack,
               fontWeight: FontWeight.bold,
             ),
           ),

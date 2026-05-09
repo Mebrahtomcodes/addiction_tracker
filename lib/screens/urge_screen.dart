@@ -63,7 +63,7 @@ class _UrgeScreenState extends State<UrgeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppTheme.backgroundBlack,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Container(
         width: double.infinity,
         decoration: BoxDecoration(
@@ -72,7 +72,7 @@ class _UrgeScreenState extends State<UrgeScreen> {
             end: Alignment.bottomCenter,
             colors: [
               AppTheme.accentBlue.withOpacity(0.1),
-              AppTheme.backgroundBlack,
+              Theme.of(context).scaffoldBackgroundColor,
             ],
           ),
         ),
@@ -86,7 +86,7 @@ class _UrgeScreenState extends State<UrgeScreen> {
                   padding: const EdgeInsets.only(left: 16),
                   child: IconButton(
                     onPressed: () => Navigator.pop(context),
-                    icon: const Icon(Icons.close, color: AppTheme.textWhite, size: 30),
+                    icon: Icon(Icons.close, color: Theme.of(context).textTheme.bodyLarge?.color, size: 30),
                   ),
                 ),
               ),
@@ -123,12 +123,12 @@ class _UrgeScreenState extends State<UrgeScreen> {
                 const SizedBox(height: 60),
                 FadeIn(
                   duration: const Duration(seconds: 2),
-                  child: const Text(
+                  child: Text(
                     "BREATHE IN... BREATHE OUT",
                     style: TextStyle(
                       fontSize: 18,
                       letterSpacing: 4,
-                      color: AppTheme.textWhite,
+                      color: Theme.of(context).textTheme.bodyLarge?.color,
                     ),
                   ),
                 ),
@@ -140,12 +140,12 @@ class _UrgeScreenState extends State<UrgeScreen> {
                     child: Text(
                       activeSentences[sentenceIndex],
                       textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 18,
-                        color: AppTheme.textWhite.withOpacity(0.8),
-                        fontStyle: FontStyle.italic,
-                        fontWeight: FontWeight.w500,
-                      ),
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Theme.of(context).textTheme.bodyLarge?.color?.withOpacity(0.8),
+                          fontStyle: FontStyle.italic,
+                          fontWeight: FontWeight.w500,
+                        ),
                     ),
                   ),
                 ),

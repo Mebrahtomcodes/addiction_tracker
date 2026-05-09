@@ -8,6 +8,10 @@ class AppTheme {
   static const Color surfaceGrey = Color(0xFF1E1E1E);
   static const Color textWhite = Color(0xFFF5F5F5);
 
+  static const Color backgroundWhite = Color(0xFFF5F5F5);
+  static const Color surfaceWhite = Color(0xFFFFFFFF);
+  static const Color textBlack = Color(0xFF212121);
+
   static ThemeData get darkTheme {
     return ThemeData(
       useMaterial3: true,
@@ -54,6 +58,61 @@ class AppTheme {
       cardTheme: CardThemeData(
         color: surfaceGrey,
         elevation: 4,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(24),
+        ),
+      ),
+    );
+  }
+
+  static ThemeData get lightTheme {
+    return ThemeData(
+      useMaterial3: true,
+      brightness: Brightness.light,
+      scaffoldBackgroundColor: backgroundWhite,
+      colorScheme: ColorScheme.fromSeed(
+        seedColor: primaryGreen,
+        brightness: Brightness.light,
+        primary: primaryGreen,
+        secondary: accentBlue,
+        surface: surfaceWhite,
+      ),
+      textTheme: GoogleFonts.outfitTextTheme(
+        const TextTheme(
+          bodyLarge: TextStyle(color: textBlack),
+          bodyMedium: TextStyle(color: textBlack),
+          displayLarge: TextStyle(color: textBlack, fontWeight: FontWeight.bold),
+        ),
+      ),
+      appBarTheme: AppBarTheme(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        centerTitle: true,
+        iconTheme: const IconThemeData(color: textBlack),
+        titleTextStyle: GoogleFonts.outfit(
+          fontSize: 22,
+          fontWeight: FontWeight.bold,
+          color: textBlack,
+        ),
+      ),
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: primaryGreen,
+          foregroundColor: Colors.white,
+          padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+          textStyle: GoogleFonts.outfit(
+            fontSize: 16,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+      ),
+      cardTheme: CardThemeData(
+        color: surfaceWhite,
+        elevation: 2,
+        shadowColor: Colors.black.withOpacity(0.1),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(24),
         ),

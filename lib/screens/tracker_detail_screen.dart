@@ -119,7 +119,7 @@ class _TrackerDetailScreenState extends State<TrackerDetailScreen> {
     if (tracker.currentStreak > 0 && tracker.currentStreak % 3 == 0) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text("CONGRATULATIONS! ${tracker.currentStreak} DAYS FREE FROM ${tracker.title.toUpperCase()}!"),
+          content: Text("CONGRATULATIONS! ${tracker.currentStreak} DAYS FREE FROM ${QuoteService.cleanTitle(tracker.title).toUpperCase()}!"),
           backgroundColor: AppTheme.primaryGreen,
           behavior: SnackBarBehavior.floating,
         ),
@@ -223,7 +223,7 @@ class _TrackerDetailScreenState extends State<TrackerDetailScreen> {
               radius: 1.5,
               colors: [
                 AppTheme.primaryGreen.withOpacity(0.1),
-                AppTheme.backgroundBlack,
+                Theme.of(context).scaffoldBackgroundColor,
               ],
             ),
           ),
@@ -251,7 +251,7 @@ class _TrackerDetailScreenState extends State<TrackerDetailScreen> {
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 18,
-                        color: AppTheme.textWhite.withOpacity(0.8),
+                        color: Theme.of(context).textTheme.bodyLarge?.color?.withOpacity(0.8),
                         fontStyle: FontStyle.italic,
                       ),
                     ),
@@ -274,7 +274,7 @@ class _TrackerDetailScreenState extends State<TrackerDetailScreen> {
                       child: Text(
                         "Developed by Mebre lala",
                         style: TextStyle(
-                          color: AppTheme.textWhite.withOpacity(0.3),
+                          color: Theme.of(context).textTheme.bodyLarge?.color?.withOpacity(0.3),
                           fontSize: 12,
                           letterSpacing: 1.2,
                         ),
@@ -327,7 +327,7 @@ class _TrackerDetailScreenState extends State<TrackerDetailScreen> {
                 fontSize: 18,
                 letterSpacing: 4,
                 fontWeight: FontWeight.w300,
-                color: AppTheme.textWhite.withOpacity(0.6),
+                color: Theme.of(context).textTheme.bodyLarge?.color?.withOpacity(0.6),
               ),
             ),
           ],
@@ -400,7 +400,9 @@ class _TrackerDetailScreenState extends State<TrackerDetailScreen> {
                 },
                 icon: Icon(
                   isLabelLocked ? Icons.lock : Icons.lock_open_outlined,
-                  color: AppTheme.backgroundBlack.withOpacity(0.5),
+                  color: Theme.of(context).brightness == Brightness.dark 
+                      ? Colors.black.withOpacity(0.5) 
+                      : Colors.white.withOpacity(0.7),
                   size: 20,
                 ),
               ),

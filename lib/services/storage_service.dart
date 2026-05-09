@@ -14,6 +14,17 @@ class StorageService {
   static const String lastUpdateKey = "last_update_date";
   static const String lastCheckInKey = "last_check_in";
   static const String startDateKey = "start_date";
+  static const String themeKey = "is_dark_mode";
+
+  Future<void> saveThemeMode(bool isDarkMode) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool(themeKey, isDarkMode);
+  }
+
+  Future<bool> getThemeMode() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getBool(themeKey) ?? true; // Default to dark mode
+  }
 
   Future<void> saveTrackers(List<TrackerModel> trackers) async {
     final prefs = await SharedPreferences.getInstance();
