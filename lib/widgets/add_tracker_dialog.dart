@@ -35,11 +35,11 @@ class _AddTrackerDialogState extends State<AddTrackerDialog> {
         decoration: InputDecoration(
           hintText: "e.g No Tiktok,No Smoking,No Betting etc.",
           hintStyle: TextStyle(color: Theme.of(context).textTheme.bodyLarge?.color?.withOpacity(0.5)),
-          enabledBorder: const UnderlineInputBorder(
-            borderSide: BorderSide(color: AppTheme.accentBlue),
+          enabledBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: Theme.of(context).colorScheme.secondary),
           ),
-          focusedBorder: const UnderlineInputBorder(
-            borderSide: BorderSide(color: AppTheme.primaryGreen),
+          focusedBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: Theme.of(context).colorScheme.primary),
           ),
         ),
       ),

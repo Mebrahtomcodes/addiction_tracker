@@ -3,6 +3,8 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 import '../models/tracker_model.dart';
+import '../models/notification_settings_model.dart';
+import 'storage_service.dart';
 import 'quote_service.dart';
 
 class NotificationService {
@@ -46,14 +48,14 @@ class NotificationService {
   }
 
   Future<void> scheduleAdaptiveNotifications(List<TrackerModel> trackers) async {
-    // 1. Cancel previously scheduled notifications
+    // 1. Load settings
+    final storage = StorageService();
+    final settings = await storage.loadNotificationSettings();
+
+    // 2. Cancel previously scheduled notifications
     await _flutterLocalNotificationsPlugin.cancelAll();
 
-    if (trackers.isEmpty) return;
-
-    // Check if notifications are globally disabled by checking if all are disabled
-    bool anyEnabled = trackers.any((t) => t.notificationsEnabled);
-    if (!anyEnabled) return;
+    if (!settings.isEnabled || trackers.isEmpty) return;
 
     // 2. Determine State
     bool isInRecovery = false;
@@ -72,19 +74,12 @@ class NotificationService {
 
     // 3. Schedule 7 Days Ahead
     for (int i = 1; i <= 7; i++) {
-      // 4. Randomize Time between 6:30 AM and 8:30 AM
-      // 6:30 AM is 390 minutes from midnight. 8:30 AM is 510 minutes.
-      // Random minutes between 390 and 510.
-      int randomMinutes = 390 + random.nextInt(121); // 0 to 120
-      int hours = randomMinutes ~/ 60;
-      int minutes = randomMinutes % 60;
-
       final scheduledDate = DateTime(
         now.year,
         now.month,
         now.day,
-        hours,
-        minutes,
+        settings.hour,
+        settings.minute,
       ).add(Duration(days: i));
 
       // Convert to TZDateTime

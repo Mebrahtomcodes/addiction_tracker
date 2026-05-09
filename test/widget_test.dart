@@ -13,7 +13,7 @@ import 'package:addiction_tracker/main.dart';
 void main() {
   testWidgets('App loads smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp(initialDarkMode: false));
+    await tester.pumpWidget(const MyApp(initialDarkMode: false, initialColor: Colors.green));
 
     // Verify that our app loads (checking for the title in MaterialApp)
     expect(find.text('Discipline Tracker'), findsOneWidget);

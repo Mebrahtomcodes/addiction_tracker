@@ -4,11 +4,12 @@ import 'dart:math';
 import 'package:animate_do/animate_do.dart';
 import '../theme.dart';
 import '../services/quote_service.dart';
+import '../widgets/app_drawer.dart';
 
 class UrgeScreen extends StatefulWidget {
   final String trackerTitle;
   
-  const UrgeScreen({super.key, required this.trackerTitle});
+  const UrgeScreen({super.key, this.trackerTitle = "General"});
 
   @override
   State<UrgeScreen> createState() => _UrgeScreenState();
@@ -64,6 +65,11 @@ class _UrgeScreenState extends State<UrgeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      appBar: AppBar(
+        title: const Text("URGE MODE"),
+        backgroundColor: Colors.transparent,
+      ),
+      drawer: const AppDrawer(),
       body: Container(
         width: double.infinity,
         decoration: BoxDecoration(
@@ -71,7 +77,7 @@ class _UrgeScreenState extends State<UrgeScreen> {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              AppTheme.accentBlue.withOpacity(0.1),
+              Theme.of(context).colorScheme.secondary.withOpacity(0.1),
               Theme.of(context).scaffoldBackgroundColor,
             ],
           ),
@@ -99,10 +105,10 @@ class _UrgeScreenState extends State<UrgeScreen> {
                     height: 200,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      border: Border.all(color: AppTheme.accentBlue.withOpacity(0.5), width: 2),
+                      border: Border.all(color: Theme.of(context).colorScheme.secondary.withOpacity(0.5), width: 2),
                       boxShadow: [
                         BoxShadow(
-                          color: AppTheme.accentBlue.withOpacity(0.2),
+                          color: Theme.of(context).colorScheme.secondary.withOpacity(0.2),
                           blurRadius: 30,
                           spreadRadius: 5,
                         ),
@@ -111,10 +117,10 @@ class _UrgeScreenState extends State<UrgeScreen> {
                     child: Center(
                       child: Text(
                         "$seconds",
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 64,
                           fontWeight: FontWeight.bold,
-                          color: AppTheme.accentBlue,
+                          color: Theme.of(context).colorScheme.secondary,
                         ),
                       ),
                     ),
@@ -153,14 +159,14 @@ class _UrgeScreenState extends State<UrgeScreen> {
                 FadeIn(
                   child: Column(
                     children: [
-                      const Icon(Icons.check_circle_outline, color: AppTheme.primaryGreen, size: 80),
+                      Icon(Icons.check_circle_outline, color: Theme.of(context).colorScheme.primary, size: 80),
                       const SizedBox(height: 20),
-                      const Text(
+                      Text(
                         "URGE DEFEATED",
                         style: TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
-                          color: AppTheme.primaryGreen,
+                          color: Theme.of(context).colorScheme.primary,
                         ),
                       ),
                       const SizedBox(height: 40),

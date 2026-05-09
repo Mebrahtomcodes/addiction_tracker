@@ -9,6 +9,7 @@ import '../widgets/add_tracker_dialog.dart';
 import 'tracker_detail_screen.dart';
 import '../theme.dart';
 import '../main.dart';
+import '../widgets/app_drawer.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
@@ -59,7 +60,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     await NotificationService().scheduleAdaptiveNotifications(loadedTrackers);
 
     setState(() {
-      trackers = loadedTrackers;
+      trackers = loadedTrackers..sort((a, b) => b.currentStreak.compareTo(a.currentStreak));
       isLoading = false;
     });
   }
@@ -73,6 +74,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     
     setState(() {
       trackers.add(newTracker);
+      trackers.sort((a, b) => b.currentStreak.compareTo(a.currentStreak));
     });
     
     await storage.saveTrackers(trackers);
@@ -101,6 +103,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       if (index != -1) {
         setState(() {
           trackers[index] = updatedTracker;
+          trackers.sort((a, b) => b.currentStreak.compareTo(a.currentStreak));
         });
         await storage.saveTrackers(trackers);
         await NotificationService().scheduleAdaptiveNotifications(trackers);
@@ -120,43 +123,35 @@ class _DashboardScreenState extends State<DashboardScreen> {
               MyApp.of(context).toggleTheme();
             },
             icon: Icon(
-              MyApp.of(context).isDarkMode 
+              Theme.of(context).brightness == Brightness.dark 
                 ? Icons.light_mode_outlined 
                 : Icons.dark_mode_outlined
             ),
           ),
-          IconButton(
-            onPressed: () {
-              showDialog(
-                context: context,
-                builder: (context) => const DeveloperDialog(),
-              );
-            },
-            icon: const Icon(Icons.info_outline_rounded),
-          ),
         ],
       ),
+      drawer: const AppDrawer(),
       body: Container(
         decoration: BoxDecoration(
           gradient: RadialGradient(
             center: Alignment.topCenter,
             radius: 1.5,
             colors: [
-              AppTheme.primaryGreen.withOpacity(0.1),
+              Theme.of(context).colorScheme.primary.withOpacity(0.1),
               Theme.of(context).scaffoldBackgroundColor,
             ],
           ),
         ),
         child: SafeArea(
           child: isLoading 
-            ? const Center(child: CircularProgressIndicator(color: AppTheme.primaryGreen))
+            ? Center(child: CircularProgressIndicator(color: Theme.of(context).colorScheme.primary))
             : trackers.isEmpty 
               ? _buildEmptyState() 
               : _buildTrackerList(),
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: AppTheme.primaryGreen,
+        backgroundColor: Theme.of(context).colorScheme.primary,
         child: const Icon(Icons.add, color: AppTheme.backgroundBlack),
         onPressed: () {
           showDialog(
@@ -227,12 +222,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
           color: Theme.of(context).cardTheme.color,
           borderRadius: BorderRadius.circular(20),
           border: Border.all(
-            color: AppTheme.primaryGreen.withOpacity(0.3),
+            color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
             width: 1,
           ),
           boxShadow: [
             BoxShadow(
-              color: AppTheme.primaryGreen.withOpacity(0.05),
+              color: Theme.of(context).colorScheme.primary.withOpacity(0.05),
               blurRadius: 20,
               offset: const Offset(0, 4),
             ),
@@ -280,20 +275,20 @@ class _DashboardScreenState extends State<DashboardScreen> {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               decoration: BoxDecoration(
-                color: AppTheme.primaryGreen.withOpacity(0.1),
+                color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
                 borderRadius: BorderRadius.circular(15),
                 border: Border.all(
-                  color: AppTheme.primaryGreen.withOpacity(0.5),
+                  color: Theme.of(context).colorScheme.primary.withOpacity(0.5),
                 ),
               ),
               child: Column(
                 children: [
                   Text(
                     "${tracker.currentStreak}",
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
-                      color: AppTheme.primaryGreen,
+                      color: Theme.of(context).colorScheme.primary,
                     ),
                   ),
                   Text(
@@ -301,7 +296,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     style: TextStyle(
                       fontSize: 10,
                       letterSpacing: 1.5,
-                      color: AppTheme.primaryGreen.withOpacity(0.8),
+                      color: Theme.of(context).colorScheme.primary.withOpacity(0.8),
                     ),
                   ),
                 ],

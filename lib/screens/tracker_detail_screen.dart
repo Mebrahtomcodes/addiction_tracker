@@ -120,7 +120,7 @@ class _TrackerDetailScreenState extends State<TrackerDetailScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text("CONGRATULATIONS! ${tracker.currentStreak} DAYS FREE FROM ${QuoteService.cleanTitle(tracker.title).toUpperCase()}!"),
-          backgroundColor: AppTheme.primaryGreen,
+          backgroundColor: Theme.of(context).colorScheme.primary,
           behavior: SnackBarBehavior.floating,
         ),
       );
@@ -222,7 +222,7 @@ class _TrackerDetailScreenState extends State<TrackerDetailScreen> {
               center: Alignment.topCenter,
               radius: 1.5,
               colors: [
-                AppTheme.primaryGreen.withOpacity(0.1),
+                Theme.of(context).colorScheme.primary.withOpacity(0.1),
                 Theme.of(context).scaffoldBackgroundColor,
               ],
             ),
@@ -298,12 +298,12 @@ class _TrackerDetailScreenState extends State<TrackerDetailScreen> {
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         border: Border.all(
-          color: AppTheme.primaryGreen.withOpacity(0.2),
+          color: Theme.of(context).colorScheme.primary.withOpacity(0.2),
           width: 8,
         ),
         boxShadow: [
           BoxShadow(
-            color: AppTheme.primaryGreen.withOpacity(0.1),
+            color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
             blurRadius: 40,
             spreadRadius: 10,
           ),
@@ -315,10 +315,10 @@ class _TrackerDetailScreenState extends State<TrackerDetailScreen> {
           children: [
             Text(
               "${tracker.currentStreak}",
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 84,
                 fontWeight: FontWeight.bold,
-                color: AppTheme.primaryGreen,
+                color: Theme.of(context).colorScheme.primary,
               ),
             ),
             Text(
@@ -342,21 +342,21 @@ class _TrackerDetailScreenState extends State<TrackerDetailScreen> {
       decoration: BoxDecoration(
         color: AppTheme.surfaceGrey,
         borderRadius: BorderRadius.circular(30),
-        border: Border.all(color: AppTheme.accentBlue.withOpacity(0.3)),
+        border: Border.all(color: Theme.of(context).colorScheme.secondary.withOpacity(0.3)),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Icon(
+          Icon(
             Icons.emoji_events_outlined,
-            color: AppTheme.accentBlue,
+            color: Theme.of(context).colorScheme.secondary,
             size: 20,
           ),
           const SizedBox(width: 8),
           Text(
             "BEST: ${tracker.longestStreak} DAYS",
-            style: const TextStyle(
-              color: AppTheme.accentBlue,
+            style: TextStyle(
+              color: Theme.of(context).colorScheme.secondary,
               fontWeight: FontWeight.bold,
               letterSpacing: 1.2,
             ),
@@ -377,9 +377,9 @@ class _TrackerDetailScreenState extends State<TrackerDetailScreen> {
               child: ElevatedButton(
                 onPressed: checkIn,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: AppTheme.primaryGreen,
+                  backgroundColor: Theme.of(context).colorScheme.primary,
                   elevation: 8,
-                  shadowColor: AppTheme.primaryGreen.withOpacity(0.5),
+                  shadowColor: Theme.of(context).colorScheme.primary.withOpacity(0.5),
                 ),
                 child: AnimatedSwitcher(
                   duration: const Duration(milliseconds: 500),
@@ -421,15 +421,15 @@ class _TrackerDetailScreenState extends State<TrackerDetailScreen> {
                   );
                 },
                 style: OutlinedButton.styleFrom(
-                  side: const BorderSide(color: AppTheme.accentBlue),
+                  side: BorderSide(color: Theme.of(context).colorScheme.secondary),
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16),
                   ),
                 ),
-                child: const Text(
+                child: Text(
                   "I HAVE AN URGE",
-                  style: TextStyle(color: AppTheme.accentBlue),
+                  style: TextStyle(color: Theme.of(context).colorScheme.secondary),
                 ),
               ),
             ),

@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AppTheme {
-  static const Color primaryGreen = Color(0xFF00E676);
-  static const Color accentBlue = Color(0xFF00D2FF);
   static const Color backgroundBlack = Color(0xFF121212);
   static const Color surfaceGrey = Color(0xFF1E1E1E);
   static const Color textWhite = Color(0xFFF5F5F5);
@@ -12,16 +10,23 @@ class AppTheme {
   static const Color surfaceWhite = Color(0xFFFFFFFF);
   static const Color textBlack = Color(0xFF212121);
 
-  static ThemeData get darkTheme {
+  static ThemeData getTheme(bool isDark, Color seedColor) {
+    if (isDark) {
+      return _buildDarkTheme(seedColor);
+    } else {
+      return _buildLightTheme(seedColor);
+    }
+  }
+
+  static ThemeData _buildDarkTheme(Color primaryColor) {
     return ThemeData(
       useMaterial3: true,
       brightness: Brightness.dark,
       scaffoldBackgroundColor: backgroundBlack,
       colorScheme: ColorScheme.fromSeed(
-        seedColor: primaryGreen,
+        seedColor: primaryColor,
         brightness: Brightness.dark,
-        primary: primaryGreen,
-        secondary: accentBlue,
+        primary: primaryColor,
         surface: surfaceGrey,
       ),
       textTheme: GoogleFonts.outfitTextTheme(
@@ -43,7 +48,7 @@ class AppTheme {
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
-          backgroundColor: primaryGreen,
+          backgroundColor: primaryColor,
           foregroundColor: backgroundBlack,
           padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
           shape: RoundedRectangleBorder(
@@ -65,16 +70,15 @@ class AppTheme {
     );
   }
 
-  static ThemeData get lightTheme {
+  static ThemeData _buildLightTheme(Color primaryColor) {
     return ThemeData(
       useMaterial3: true,
       brightness: Brightness.light,
       scaffoldBackgroundColor: backgroundWhite,
       colorScheme: ColorScheme.fromSeed(
-        seedColor: primaryGreen,
+        seedColor: primaryColor,
         brightness: Brightness.light,
-        primary: primaryGreen,
-        secondary: accentBlue,
+        primary: primaryColor,
         surface: surfaceWhite,
       ),
       textTheme: GoogleFonts.outfitTextTheme(
@@ -97,7 +101,7 @@ class AppTheme {
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
-          backgroundColor: primaryGreen,
+          backgroundColor: primaryColor,
           foregroundColor: Colors.white,
           padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
           shape: RoundedRectangleBorder(
@@ -119,4 +123,8 @@ class AppTheme {
       ),
     );
   }
+
+  // Keeping constants for internal use if needed, but primary is now dynamic
+  static const Color primaryGreen = Color(0xFF00E676);
+  static const Color accentBlue = Color(0xFF00D2FF);
 }

@@ -1,11 +1,17 @@
 import 'dart:convert';
+import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../models/tracker_model.dart';
+import '../models/journal_model.dart';
+import '../models/notification_settings_model.dart';
 import 'package:uuid/uuid.dart';
 import 'dart:math';
 
 class StorageService {
   static const String trackersKey = "all_trackers";
+  static const String journalKey = "all_journal_entries";
+  static const String notificationSettingsKey = "notification_settings";
+  static const String colorKey = "theme_seed_color";
   
   // Old keys for migration
   static const String currentKey = "current_streak";
@@ -96,5 +102,61 @@ class StorageService {
     await prefs.remove(startDateKey);
 
     return trackers;
+  }
+
+  Future<void> saveJournalEntries(List<JournalModel> entries) async {
+    final prefs = await SharedPreferences.getInstance();
+    final String encodedData = json.encode(
+      entries.map((entry) => entry.toJson()).toList(),
+    );
+    await prefs.setString(journalKey, encodedData);
+  }
+
+  Future<List<JournalModel>> loadJournalEntries() async {
+    final prefs = await SharedPreferences.getInstance();
+    final String? journalString = prefs.getString(journalKey);
+    if (journalString == null || journalString.isEmpty) {
+      return [];
+    }
+
+    try {
+      final List<dynamic> decodedData = json.decode(journalString);
+      return decodedData.map((item) => JournalModel.fromJson(item)).toList();
+    } catch (e) {
+      return [];
+    }
+  }
+
+  Future<void> saveNotificationSettings(NotificationSettingsModel settings) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(notificationSettingsKey, json.encode(settings.toJson()));
+  }
+
+  Future<NotificationSettingsModel> loadNotificationSettings() async {
+    final prefs = await SharedPreferences.getInstance();
+    final String? settingsString = prefs.getString(notificationSettingsKey);
+    if (settingsString == null) {
+      return NotificationSettingsModel();
+    }
+    return NotificationSettingsModel.fromJson(json.decode(settingsString));
+  }
+
+  Future<void> saveThemeColor(Color color) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setInt(colorKey, color.value);
+  }
+
+  Future<Color> getThemeColor() async {
+    final prefs = await SharedPreferences.getInstance();
+    final int? colorValue = prefs.getInt(colorKey);
+    if (colorValue == null) {
+      return const Color(0xFF00E676); // Default green
+    }
+    return Color(colorValue);
+  }
+
+  Future<void> clearAllData() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.clear();
   }
 }
